@@ -45,5 +45,6 @@ namespace Minesweeper
             int[] position = { this.positionX, this.positionY };
             return position;
         }
+
     }
 }
