@@ -44,14 +44,19 @@ namespace Minesweeper
             int x = b.Left / 40;
             int y = b.Top / 40;
             if (player.grid.grid[x, y].numberOfAdjecentBombs == -1)
+            {
                 b.Text = "\U0001F4A3"; // U0001F4A3 is ASCII Code for bomb
+            }
             else if (player.grid.grid[x, y].numberOfAdjecentBombs == 0)
             {
                 b.Text = "";
                 RevealNeigboringFileds(x, y);
             }
             else
+            {
                 b.Text = player.grid.grid[x, y].numberOfAdjecentBombs.ToString();
+                b.Enabled = false;
+            }
         }
 
         private void RevealNeigboringFileds(int x, int y)
@@ -70,13 +75,14 @@ namespace Minesweeper
                         continue;
                     if (!buttons[p.X, p.Y].Enabled) 
                         continue;
-                    if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0) 
-                        continue;
 
                     buttons[p.X, p.Y].Enabled = false;
 
                     if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0)
-                        buttons[p.X, p.Y].Text = "" + player.grid.grid[p.X, p.Y];
+                        buttons[p.X, p.Y].Text = "" + player.grid.grid[p.X, p.Y].numberOfAdjecentBombs;
+
+                    if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0)
+                        continue;
 
                     stack.Push(new Point(p.X - 1, p.Y));
                     stack.Push(new Point(p.X + 1, p.Y));
