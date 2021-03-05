@@ -19,5 +19,6 @@ namespace Minesweeper
             fieldsLeft = (grid.height*grid.width)-grid.amountOfBombs;
             fieldsRevealed = 0;
         }
+
     }
 }
