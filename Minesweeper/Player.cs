@@ -20,5 +20,14 @@ namespace Minesweeper
             fieldsRevealed = 0;
         }
 
+        public void SetGameOver(bool gameState)
+        {
+            gameOver = gameState;
+        }
+
+        public bool GetGameOver()
+        {
+            return gameOver;
+        }
     }
 }

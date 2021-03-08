@@ -15,7 +15,9 @@ namespace Minesweeper
         const int BOARD_SIZE = 10;
         //Player constructor takes grid size as parameter
         Player player = new Player(BOARD_SIZE);
-        public Button[,] buttons = new Button[BOARD_SIZE+2, BOARD_SIZE+2];
+        private Button[,] buttons = new Button[BOARD_SIZE+2, BOARD_SIZE+2];
+        private Label gameOverLabel = new Label();
+        private Button newGameButton = new Button();
         public MineSweeper()
         {
             InitializeComponent();
@@ -45,7 +47,7 @@ namespace Minesweeper
             int y = b.Top / 40;
             if (player.grid.grid[x, y].numberOfAdjecentBombs == -1)
             {
-                b.Text = "\U0001F4A3"; // U0001F4A3 is ASCII Code for bomb
+                GameOver();
             }
             else if (player.grid.grid[x, y].numberOfAdjecentBombs == 0)
             {
@@ -91,6 +93,60 @@ namespace Minesweeper
                 }
 
             }
+        }
+
+        private void GameOver()
+        {
+            player.SetGameOver(true);
+            for (int i = 1; i < player.grid.height - 1; i++)
+                for (int j = 1; j < player.grid.width - 1; j++)
+                {
+                    buttons[i, j].Text = "" + player.grid.grid[i, j].numberOfAdjecentBombs;
+                    if (player.grid.grid[i, j].numberOfAdjecentBombs == -1)
+                    {
+                        buttons[i, j].Text = "\U0001F4A3"; // U0001F4A3 is ASCII Code for bomb
+                    }
+                    buttons[i, j].Enabled = false;
+                }
+            RenderGameOverContent();
+
+
+        }
+        //Adds "game over" label and makes "new game" button
+        private void RenderGameOverContent()
+        {
+             
+            gameOverLabel.Text = "Game Over";
+            gameOverLabel.Font = new Font("Arial", 20);
+            gameOverLabel.TextAlign = ContentAlignment.MiddleCenter;
+            gameOverLabel.Width = 160;
+            gameOverLabel.Height = 40;
+            gameOverLabel.Left = 550;
+            gameOverLabel.Top = 200;
+            Controls.Add(gameOverLabel);
+
+            newGameButton.Text = "New Game";
+            newGameButton.Font = new Font("Arial", 20);
+            newGameButton.TextAlign = ContentAlignment.MiddleCenter;
+            newGameButton.Width = 160;
+            newGameButton.Height = 40;
+            newGameButton.Left = 550;
+            newGameButton.Top = 300;
+            Controls.Add(newGameButton);
+            newGameButton.Click += NewGameButton_Click;
+
+        }
+
+        private void NewGameButton_Click(object sender, EventArgs e)
+        {
+            player = new Player(BOARD_SIZE);
+            Controls.Remove(gameOverLabel);
+            for(int i = 1; i < player.grid.height - 1; i++)
+                for (int j = 1; j < player.grid.width - 1; j++)
+                {
+                    buttons[i, j].Text = "";
+                    buttons[i, j].Enabled = true;
+                }
         }
     }
 }
