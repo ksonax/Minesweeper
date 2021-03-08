@@ -45,7 +45,7 @@ namespace Minesweeper
             int y = b.Top / 40;
             if (player.grid.grid[x, y].numberOfAdjecentBombs == -1)
             {
-                b.Text = "\U0001F4A3"; // U0001F4A3 is ASCII Code for bomb
+                GameOver();
             }
             else if (player.grid.grid[x, y].numberOfAdjecentBombs == 0)
             {
@@ -91,6 +91,37 @@ namespace Minesweeper
                 }
 
             }
+        }
+
+        public void GameOver()
+        {
+            player.SetGameOver(true);
+            for (int i = 1; i < player.grid.height - 1; i++)
+                for (int j = 1; j < player.grid.width - 1; j++)
+                {
+                    buttons[i, j].Text = "" + player.grid.grid[i, j].numberOfAdjecentBombs;
+                    if (player.grid.grid[i, j].numberOfAdjecentBombs == -1)
+                    {
+                        buttons[i, j].Text = "\U0001F4A3"; // U0001F4A3 is ASCII Code for bomb
+                    }
+                }
+            RenderGameOverContent();
+
+
+        }
+        //Adds "game over" label and makes "new game" button
+        public void RenderGameOverContent()
+        {
+             
+            Label gameOverLabel = new Label();
+            gameOverLabel.Text = "Game Over";
+            gameOverLabel.Font = new Font("Arial", 20);
+            gameOverLabel.TextAlign = ContentAlignment.MiddleCenter;
+            gameOverLabel.Width = 160;
+            gameOverLabel.Height = 40;
+            gameOverLabel.Left = 550;
+            gameOverLabel.Top = 200;
+            Controls.Add(gameOverLabel);
         }
     }
 }
