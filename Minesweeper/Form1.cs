@@ -105,8 +105,23 @@ namespace Minesweeper
                         buttons[i, j].Text = "\U0001F4A3"; // U0001F4A3 is ASCII Code for bomb
                     }
                 }
-            //TODO 
-            //Add popup window message "Game Over"
+            RenderGameOverContent();
+
+
+        }
+        //Adds "game over" label and makes "new game" button
+        public void RenderGameOverContent()
+        {
+             
+            Label gameOverLabel = new Label();
+            gameOverLabel.Text = "Game Over";
+            gameOverLabel.Font = new Font("Arial", 20);
+            gameOverLabel.TextAlign = ContentAlignment.MiddleCenter;
+            gameOverLabel.Width = 160;
+            gameOverLabel.Height = 40;
+            gameOverLabel.Left = 550;
+            gameOverLabel.Top = 200;
+            Controls.Add(gameOverLabel);
         }
     }
 }
