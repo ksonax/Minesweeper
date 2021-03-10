@@ -36,30 +36,52 @@ namespace Minesweeper
                     b.Left = i * 40;
                     b.Top = j * 40;
                     Controls.Add(b);
-                    b.Click += Button_Click;
+                    b.MouseDown += Button_MouseDown;
                 }
         }
 
-        private void Button_Click(object sender, EventArgs e)
+        private void Button_MouseDown(object sender, MouseEventArgs e)
         {
             Button b = (Button)sender;
             int x = b.Left / 40;
             int y = b.Top / 40;
-            if (player.grid.grid[x, y].numberOfAdjecentBombs == -1)
+            //MouseEventArgs m = (MouseEventArgs)e;
+            switch (e.Button)
             {
-                GameOver();
-            }
-            else if (player.grid.grid[x, y].numberOfAdjecentBombs == 0)
-            {
-                b.Text = "";
-                RevealNeigboringFileds(x, y);
-            }
-            else
-            {
-                b.Text = player.grid.grid[x, y].numberOfAdjecentBombs.ToString();
-                b.Enabled = false;
+                case MouseButtons.Left:
+                    if (player.grid.grid[x, y].numberOfAdjecentBombs == -1)
+                    {
+                        GameOver();
+                    }
+                    else if (player.grid.grid[x, y].numberOfAdjecentBombs == 0)
+                    {
+                        b.Text = "";
+                        RevealNeigboringFileds(x, y);
+                    }
+                    else
+                    {
+                        if(b.Text == "\U0001F6A9")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            b.Text = player.grid.grid[x, y].numberOfAdjecentBombs.ToString();
+                            b.Enabled = false;
+                        }
+                    }
+                    break;
+                case MouseButtons.Right:
+                    if (b.Text == "\U0001F6A9")
+                    {
+                        b.Text = "";
+                    }
+                    else
+                        b.Text = "\U0001F6A9";
+                    break;
             }
         }
+
 
         private void RevealNeigboringFileds(int x, int y)
         {
@@ -77,14 +99,17 @@ namespace Minesweeper
                         continue;
                     if (!buttons[p.X, p.Y].Enabled) 
                         continue;
+                    if (buttons[p.X, p.Y].Text != "\U0001F6A9")
+                        buttons[p.X, p.Y].Enabled = false;
 
-                    buttons[p.X, p.Y].Enabled = false;
-
-                    if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0)
+                    if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0 && buttons[p.X, p.Y].Text != "\U0001F6A9")
                         buttons[p.X, p.Y].Text = "" + player.grid.grid[p.X, p.Y].numberOfAdjecentBombs;
 
                     if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0)
                         continue;
+
+                    if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs == 0 && buttons[p.X,p.Y].Text != "\U0001F6A9")
+                        buttons[p.X, p.Y].Text = "";
 
                     stack.Push(new Point(p.X - 1, p.Y));
                     stack.Push(new Point(p.X + 1, p.Y));
@@ -109,9 +134,8 @@ namespace Minesweeper
                     buttons[i, j].Enabled = false;
                 }
             RenderGameOverContent();
-
-
         }
+
         //Adds "game over" label and makes "new game" button
         private void RenderGameOverContent()
         {
