@@ -55,17 +55,29 @@ namespace Minesweeper
                     }
                     else if (player.grid.grid[x, y].numberOfAdjecentBombs == 0)
                     {
-                        b.Text = "ss";
+                        b.Text = "";
                         RevealNeigboringFileds(x, y);
                     }
                     else
                     {
-                        b.Text = player.grid.grid[x, y].numberOfAdjecentBombs.ToString();
-                        b.Enabled = false;
+                        if(b.Text == "\U0001F6A9")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            b.Text = player.grid.grid[x, y].numberOfAdjecentBombs.ToString();
+                            b.Enabled = false;
+                        }
                     }
                     break;
                 case MouseButtons.Right:
-                    b.Text = "\U0001F6A9";
+                    if (b.Text == "\U0001F6A9")
+                    {
+                        b.Text = "";
+                    }
+                    else
+                        b.Text = "\U0001F6A9";
                     break;
             }
         }
@@ -87,16 +99,16 @@ namespace Minesweeper
                         continue;
                     if (!buttons[p.X, p.Y].Enabled) 
                         continue;
+                    if (buttons[p.X, p.Y].Text != "\U0001F6A9")
+                        buttons[p.X, p.Y].Enabled = false;
 
-                    buttons[p.X, p.Y].Enabled = false;
-
-                    if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0)
+                    if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0 && buttons[p.X, p.Y].Text != "\U0001F6A9")
                         buttons[p.X, p.Y].Text = "" + player.grid.grid[p.X, p.Y].numberOfAdjecentBombs;
 
                     if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0)
                         continue;
 
-                    if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs == 0)
+                    if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs == 0 && buttons[p.X,p.Y].Text != "\U0001F6A9")
                         buttons[p.X, p.Y].Text = "";
 
                     stack.Push(new Point(p.X - 1, p.Y));
