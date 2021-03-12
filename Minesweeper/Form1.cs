@@ -17,7 +17,8 @@ namespace Minesweeper
         Player player = new Player(BOARD_SIZE);
         private Button[,] buttons = new Button[BOARD_SIZE+2, BOARD_SIZE+2];
         private Label gameOverLabel = new Label();
-        private Button newGameButton = new Button();
+        private int fieldsRevealed = 0;
+        private int bombsLeft = BOARD_SIZE;
         public MineSweeper()
         {
             InitializeComponent();
@@ -38,6 +39,8 @@ namespace Minesweeper
                     Controls.Add(b);
                     b.MouseDown += Button_MouseDown;
                 }
+            bombsLeftLabel.Text = bombsLeft.ToString();
+            cellsRevealedLabel.Text = fieldsRevealed.ToString();
         }
 
         private void Button_MouseDown(object sender, MouseEventArgs e)
@@ -68,6 +71,7 @@ namespace Minesweeper
                         {
                             b.Text = player.grid.grid[x, y].numberOfAdjecentBombs.ToString();
                             b.Enabled = false;
+                            cellsRevealedLabel.Text = (++fieldsRevealed).ToString();
                         }
                     }
                     break;
@@ -75,9 +79,13 @@ namespace Minesweeper
                     if (b.Text == "\U0001F6A9")
                     {
                         b.Text = "";
+                        bombsLeftLabel.Text = (++bombsLeft).ToString();
                     }
                     else
+                    {
                         b.Text = "\U0001F6A9";
+                        bombsLeftLabel.Text = (--bombsLeft).ToString();
+                    }
                     break;
             }
         }
@@ -103,13 +111,20 @@ namespace Minesweeper
                         buttons[p.X, p.Y].Enabled = false;
 
                     if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0 && buttons[p.X, p.Y].Text != "\U0001F6A9")
+                    {
                         buttons[p.X, p.Y].Text = "" + player.grid.grid[p.X, p.Y].numberOfAdjecentBombs;
+                        cellsRevealedLabel.Text = (++fieldsRevealed).ToString();
+                    }
+
 
                     if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs != 0)
                         continue;
 
                     if (player.grid.grid[p.X, p.Y].numberOfAdjecentBombs == 0 && buttons[p.X,p.Y].Text != "\U0001F6A9")
+                    {
+                        cellsRevealedLabel.Text = (++fieldsRevealed).ToString();
                         buttons[p.X, p.Y].Text = "";
+                    }
 
                     stack.Push(new Point(p.X - 1, p.Y));
                     stack.Push(new Point(p.X + 1, p.Y));
@@ -141,23 +156,13 @@ namespace Minesweeper
         {
              
             gameOverLabel.Text = "Game Over";
-            gameOverLabel.Font = new Font("Arial", 20);
+            gameOverLabel.Font = new Font("Arial", 30);
             gameOverLabel.TextAlign = ContentAlignment.MiddleCenter;
-            gameOverLabel.Width = 160;
+            gameOverLabel.Width = 240;
             gameOverLabel.Height = 40;
-            gameOverLabel.Left = 550;
-            gameOverLabel.Top = 200;
+            gameOverLabel.Left = 260;
+            gameOverLabel.Top = 500;
             Controls.Add(gameOverLabel);
-
-            newGameButton.Text = "New Game";
-            newGameButton.Font = new Font("Arial", 20);
-            newGameButton.TextAlign = ContentAlignment.MiddleCenter;
-            newGameButton.Width = 160;
-            newGameButton.Height = 40;
-            newGameButton.Left = 550;
-            newGameButton.Top = 300;
-            Controls.Add(newGameButton);
-            newGameButton.Click += NewGameButton_Click;
 
         }
 
@@ -165,6 +170,10 @@ namespace Minesweeper
         {
             player = new Player(BOARD_SIZE);
             Controls.Remove(gameOverLabel);
+            bombsLeft = BOARD_SIZE;
+            fieldsRevealed = 0;
+            bombsLeftLabel.Text = bombsLeft.ToString();
+            cellsRevealedLabel.Text = fieldsRevealed.ToString();
             for(int i = 1; i < player.grid.height - 1; i++)
                 for (int j = 1; j < player.grid.width - 1; j++)
                 {
@@ -172,5 +181,6 @@ namespace Minesweeper
                     buttons[i, j].Enabled = true;
                 }
         }
+
     }
 }
