@@ -25,7 +25,6 @@ namespace Minesweeper
         {
             positionX = newPositionX;
             positionY = newPositionY;
-            color = Color.FromName("B");
         }
 
         public void setState(bool newState)
@@ -49,7 +48,7 @@ namespace Minesweeper
             int[] position = { this.positionX, this.positionY };
             return position;
         }
-        public void setColor()
+        public void SetColor()
         {
             switch (numberOfAdjecentBombs)
             {
@@ -78,7 +77,7 @@ namespace Minesweeper
                     color = Color.FromName("Black");
                     break;
                 default:
-                    color = Color.FromName("R");
+                    color = Color.FromName("Black");
                     break;
             }
 

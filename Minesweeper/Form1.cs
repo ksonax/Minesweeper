@@ -75,7 +75,7 @@ namespace Minesweeper
                         {
                             b.Text = player.grid.grid[x, y].numberOfAdjecentBombs.ToString();
                             b.ForeColor = player.grid.grid[x, y].color;
-                            b.Enabled = true;
+                            b.Enabled = false;
                             cellsRevealedLabel.Text = (++fieldsRevealed).ToString();
                         }
                     }
