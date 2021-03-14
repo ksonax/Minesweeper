@@ -13,6 +13,10 @@ namespace Minesweeper
     public partial class MineSweeper : Form
     {
         const int BOARD_SIZE = 10;
+        const int BOARD_STARTING_X = 150;
+        const int BOARD_STARTING_Y = 100;
+
+
         //Player constructor takes grid size as parameter
         Player player = new Player(BOARD_SIZE);
         private Button[,] buttons = new Button[BOARD_SIZE+2, BOARD_SIZE+2];
@@ -34,8 +38,8 @@ namespace Minesweeper
                     b.Font = new Font("Arial", 20);
                     b.Width = 40;
                     b.Height = 40;
-                    b.Left = i * 40;
-                    b.Top = j * 40;
+                    b.Left = (i * 40) + BOARD_STARTING_X;
+                    b.Top = (j * 40) + BOARD_STARTING_Y;
                     Controls.Add(b);
                     b.MouseDown += Button_MouseDown;
                 }
@@ -46,9 +50,9 @@ namespace Minesweeper
         private void Button_MouseDown(object sender, MouseEventArgs e)
         {
             Button b = (Button)sender;
-            int x = b.Left / 40;
-            int y = b.Top / 40;
-            //MouseEventArgs m = (MouseEventArgs)e;
+            int x = (b.Left - BOARD_STARTING_X) / 40;
+            int y = (b.Top - BOARD_STARTING_Y) / 40;
+
             switch (e.Button)
             {
                 case MouseButtons.Left:
@@ -70,6 +74,7 @@ namespace Minesweeper
                         else
                         {
                             b.Text = player.grid.grid[x, y].numberOfAdjecentBombs.ToString();
+                            b.ForeColor = player.grid.grid[x, y].color;
                             b.Enabled = false;
                             cellsRevealedLabel.Text = (++fieldsRevealed).ToString();
                         }
@@ -180,6 +185,11 @@ namespace Minesweeper
                     buttons[i, j].Text = "";
                     buttons[i, j].Enabled = true;
                 }
+        }
+        
+        private void ButtonFontColor(Button b)
+        {
+
         }
 
     }

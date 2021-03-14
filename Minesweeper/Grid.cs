@@ -83,6 +83,7 @@ namespace Minesweeper
                         if (grid[i + 1, j + 1].state)
                             numberOfSurroundingBombs++;
                         grid[i, j].numberOfAdjecentBombs = numberOfSurroundingBombs;
+                        grid[i, j].SetColor();
                         numberOfSurroundingBombs = 0;
                     }
                 }

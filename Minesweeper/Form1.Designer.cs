@@ -38,7 +38,7 @@
             // newGame_Button
             // 
             this.newGame_Button.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.newGame_Button.Location = new System.Drawing.Point(550, 300);
+            this.newGame_Button.Location = new System.Drawing.Point(320, 25);
             this.newGame_Button.Name = "newGame_Button";
             this.newGame_Button.Size = new System.Drawing.Size(160, 40);
             this.newGame_Button.TabIndex = 0;
@@ -50,7 +50,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(547, 97);
+            this.label1.Location = new System.Drawing.Point(25, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 31);
             this.label1.TabIndex = 1;
@@ -60,7 +60,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(547, 190);
+            this.label2.Location = new System.Drawing.Point(575, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(167, 31);
             this.label2.TabIndex = 2;
@@ -70,7 +70,7 @@
             // 
             this.bombsLeftLabel.AutoSize = true;
             this.bombsLeftLabel.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.bombsLeftLabel.Location = new System.Drawing.Point(580, 128);
+            this.bombsLeftLabel.Location = new System.Drawing.Point(75, 75);
             this.bombsLeftLabel.Name = "bombsLeftLabel";
             this.bombsLeftLabel.Size = new System.Drawing.Size(26, 31);
             this.bombsLeftLabel.TabIndex = 3;
@@ -80,7 +80,7 @@
             // 
             this.cellsRevealedLabel.AutoSize = true;
             this.cellsRevealedLabel.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.cellsRevealedLabel.Location = new System.Drawing.Point(580, 221);
+            this.cellsRevealedLabel.Location = new System.Drawing.Point(675, 75);
             this.cellsRevealedLabel.Name = "cellsRevealedLabel";
             this.cellsRevealedLabel.Size = new System.Drawing.Size(26, 31);
             this.cellsRevealedLabel.TabIndex = 4;
