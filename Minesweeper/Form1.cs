@@ -20,7 +20,7 @@ namespace Minesweeper
         //Player constructor takes grid size as parameter
         Player player = new Player(BOARD_SIZE);
         private Button[,] buttons = new Button[BOARD_SIZE+2, BOARD_SIZE+2];
-        private Label gameOverLabel = new Label();
+        private Label gameNotification = new Label();
         private int fieldsRevealed = 0;
         private int bombsLeft = BOARD_SIZE;
         public MineSweeper()
@@ -64,6 +64,7 @@ namespace Minesweeper
                     {
                         b.Text = "";
                         RevealNeigboringFileds(x, y);
+                        CheckWiningCondition();
                     }
                     else
                     {
@@ -77,6 +78,7 @@ namespace Minesweeper
                             b.ForeColor = player.grid.grid[x, y].color;
                             b.Enabled = false;
                             cellsRevealedLabel.Text = (++fieldsRevealed).ToString();
+                            CheckWiningCondition();
                         }
                     }
                     break;
@@ -90,6 +92,7 @@ namespace Minesweeper
                     {
                         b.Text = "\U0001F6A9";
                         bombsLeftLabel.Text = (--bombsLeft).ToString();
+                        CheckWiningCondition();
                     }
                     break;
             }
@@ -151,30 +154,34 @@ namespace Minesweeper
                     {
                         buttons[i, j].Text = "\U0001F4A3"; // U0001F4A3 is ASCII Code for bomb
                     }
+                    if (player.grid.grid[i, j].numberOfAdjecentBombs == 0)
+                    {
+                        buttons[i, j].Text = "";
+                    }
                     buttons[i, j].Enabled = false;
                 }
-            RenderGameOverContent();
+            RenderNotificationContent("GAME OVER");
         }
 
         //Adds "game over" label and makes "new game" button
-        private void RenderGameOverContent()
+        private void RenderNotificationContent(string notification)
         {
-             
-            gameOverLabel.Text = "Game Over";
-            gameOverLabel.Font = new Font("Arial", 30);
-            gameOverLabel.TextAlign = ContentAlignment.MiddleCenter;
-            gameOverLabel.Width = 240;
-            gameOverLabel.Height = 40;
-            gameOverLabel.Left = 260;
-            gameOverLabel.Top = 500;
-            Controls.Add(gameOverLabel);
+
+            gameNotification.Text = notification;
+            gameNotification.Font = new Font("Arial", 25);
+            gameNotification.TextAlign = ContentAlignment.MiddleCenter;
+            gameNotification.Width = 240;
+            gameNotification.Height = 40;
+            gameNotification.Left = 280;
+            gameNotification.Top = 75;
+            Controls.Add(gameNotification);
 
         }
 
         private void NewGameButton_Click(object sender, EventArgs e)
         {
             player = new Player(BOARD_SIZE);
-            Controls.Remove(gameOverLabel);
+            Controls.Remove(gameNotification);
             bombsLeft = BOARD_SIZE;
             fieldsRevealed = 0;
             bombsLeftLabel.Text = bombsLeft.ToString();
@@ -186,10 +193,16 @@ namespace Minesweeper
                     buttons[i, j].Enabled = true;
                 }
         }
-        
-        private void ButtonFontColor(Button b)
-        {
 
+        private void CheckWiningCondition()
+        {
+            if (fieldsRevealed == ((BOARD_SIZE * BOARD_SIZE) - BOARD_SIZE) && bombsLeft == 0)
+            {
+                for (int i = 1; i < player.grid.height - 1; i++)
+                    for (int j = 1; j < player.grid.width - 1; j++)
+                        buttons[i, j].Enabled = false;
+                RenderNotificationContent("YOU WON!!!");
+            }
         }
 
     }
