@@ -151,6 +151,10 @@ namespace Minesweeper
                     {
                         buttons[i, j].Text = "\U0001F4A3"; // U0001F4A3 is ASCII Code for bomb
                     }
+                    if (player.grid.grid[i, j].numberOfAdjecentBombs == 0)
+                    {
+                        buttons[i, j].Text = "";
+                    }
                     buttons[i, j].Enabled = false;
                 }
             RenderGameOverContent();
@@ -187,10 +191,5 @@ namespace Minesweeper
                 }
         }
         
-        private void ButtonFontColor(Button b)
-        {
-
-        }
-
     }
 }
