@@ -169,8 +169,8 @@ namespace Minesweeper
             gameOverLabel.TextAlign = ContentAlignment.MiddleCenter;
             gameOverLabel.Width = 240;
             gameOverLabel.Height = 40;
-            gameOverLabel.Left = 260;
-            gameOverLabel.Top = 500;
+            gameOverLabel.Left = 280;
+            gameOverLabel.Top = 75;
             Controls.Add(gameOverLabel);
 
         }
